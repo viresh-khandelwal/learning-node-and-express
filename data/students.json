@@ -1,0 +1,17 @@
+[
+    {
+        "id" : "1",
+        "name" : "viresh",
+        "course" : "guitar"
+    } ,
+    {
+        "id" : "2",
+        "name" : "pravin",
+        "course" : "trekking"
+    } ,
+    {
+        "id" : "3",
+        "name" : "swapnil",
+        "course" : "politics"
+    }
+]

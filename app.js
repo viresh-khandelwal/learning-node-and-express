@@ -41,6 +41,15 @@ server.post('/coronaFight', (req,res) => {
     //to send a 200 success response instead of sending any other data use end() method
 })
 
+//to get path parameters from request
+server.get('/students/:id', (req,res) => {
+    let student = students.find((student) => {
+       if(student.id === req.params.id){
+           return student;
+       }
+    });
+    student ? res.send(student) : res.send('no record found');
+})
 
 
 

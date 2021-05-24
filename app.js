@@ -1,6 +1,6 @@
 const express = require('express');
 //import express from 'express';
-const students =  require('./data/students.json');
+import studentsRoute from './routes/StudentsRoute';
 
 // The major difference between require and import , is that require will automatically scan node_modules to find modules, but import , which comes from ES6, won't. Most people use babel to compile import and export , which makes import act the same as require .
 
@@ -10,45 +10,19 @@ server.listen(port, () => {
     console.log('server started');
 });
 
+server.use('/students', studentsRoute);
+
 //endpoints / routes
 server.get('/', (req,res) => {
     console.log('my first route');
     res.send('my first response');
 })
 
-server.get('/students', (req,res) => {
-    res.json(students);
-})
-
-
-//to test post, put and delete methods , we need postman
-
-server.post('/students', (req,res) => {
-    res.json(students);
-})
-
-server.put('/students', (req,res) => {
-    res.json(students);
-})
-
-server.delete('/students', (req,res) => {
-    res.json(students);
-})
 
 
 server.post('/coronaFight', (req,res) => {
     res.end();
     //to send a 200 success response instead of sending any other data use end() method
-})
-
-//to get path parameters from request
-server.get('/students/:id', (req,res) => {
-    let student = students.find((student) => {
-       if(student.id === req.params.id){
-           return student;
-       }
-    });
-    student ? res.send(student) : res.send('no record found');
 })
 
 

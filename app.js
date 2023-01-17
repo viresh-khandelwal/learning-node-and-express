@@ -1,6 +1,12 @@
 const express = require('express');
 //import express from 'express';
-import studentsRoute from './routes/StudentsRoute';
+const studentsRoute = require('./routes/StudentsRoute');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+
+const db_user_name = 'viresh';
+const db_pwd = 'Viresh%4019'; //actual password is Viresh@19 but @ needs to be url encoded to %40
+const DB_URL = 'mongodb+srv://'+viresh+':'+db_pwd+'@mongo-db-learning.82bygnn.mongodb.net/?retryWrites=true&w=majority';
 
 // The major difference between require and import , is that require will automatically scan node_modules to find modules, but import , which comes from ES6, won't. Most people use babel to compile import and export , which makes import act the same as require .
 
@@ -9,6 +15,16 @@ const server = express();
 server.listen(port, () => {
     console.log('server started');
 });
+
+mongoose.connect(DB_URL);
+const db = mongoose.connection;
+
+db.once('open', () => {
+    console.log('db connected');
+})
+
+//morgan is a middleware that is used to log requests in console. A middleware is anything that access to request , response objects and next function of any request
+server.use(morgan('tiny'));
 
 server.use('/students', studentsRoute);
 

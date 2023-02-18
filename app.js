@@ -6,12 +6,13 @@ const mongoose = require('mongoose');
 
 const db_user_name = 'viresh';
 const db_pwd = 'Viresh%4019'; //actual password is Viresh@19 but @ needs to be url encoded to %40
-const DB_URL = 'mongodb+srv://'+viresh+':'+db_pwd+'@mongo-db-learning.82bygnn.mongodb.net/?retryWrites=true&w=majority';
+const DB_URL = 'mongodb+srv://viresh:'+db_pwd+'@mongo-db-learning.82bygnn.mongodb.net/?retryWrites=true&w=majority';
 
 // The major difference between require and import , is that require will automatically scan node_modules to find modules, but import , which comes from ES6, won't. Most people use babel to compile import and export , which makes import act the same as require .
 
 const port = 3000;
 const server = express();
+server.use(express.json()); //this is written to make the code able to fetch body from request body
 server.listen(port, () => {
     console.log('server started');
 });

@@ -3,10 +3,6 @@ const router = express.Router();
 const students =  require('../data/students.json');
 const mongoose = require('mongoose');
 
-router.get('/', (req,res) => {
-    res.json(students);
-})
-
 //to create database schema and model
 const studentsSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -15,6 +11,17 @@ const studentsSchema = mongoose.Schema({
 })
 
 const studentsModel = mongoose.model('Student', studentsSchema);
+
+//to get all records from of db 
+router.get('/', (req,res) => {
+   studentsModel.find().then((error,data) => {
+       if(error){
+        res.status(500).send(error);
+       }else{
+           res.json(data)
+       } 
+   })
+})
 
 
 //to test post, put and delete methods , we need postman
@@ -43,14 +50,15 @@ router.delete('/', (req,res) => {
     res.json(students);
 })
 
-//to get path parameters from request
+//to get a specific object from database by adding a parameter in request
 router.get('/:id', (req,res) => {
-    let student = students.find((student) => {
-       if(student.id === req.params.id){
-           return student;
-       }
-    });
-    student ? res.send(student) : res.send('no record found');
+    studentsModel.findById(req.params.id, (err, data) => {
+        if(err){
+            res.status(404).send()
+        }else{
+            res.send(data);
+        }
+    })
 })
 
 module.exports = router;

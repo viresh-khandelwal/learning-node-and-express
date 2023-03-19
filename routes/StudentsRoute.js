@@ -42,8 +42,24 @@ router.post('/', (req,res) => {
     })
 })
 
-router.put('/', (req,res) => {
-    res.json(students);
+//to update an object in mongo DB database
+router.put('/:id', (req,res) => {
+   // res.json(students);
+   studentsModel.findById(req.params.id, (err,student) => {
+       if(err){
+           res.status(500).send(err);
+       }else if(student){
+           student.name = req.body.name;
+           student.course = req.body.course;
+           student.save().then((err,data) => {
+               if(err){
+                   res.status(500).send(err);
+               }else{
+                   res.send(student);
+               }
+           })
+       }
+   })
 })
 
 router.delete('/', (req,res) => {

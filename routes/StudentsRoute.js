@@ -44,7 +44,6 @@ router.post('/', (req,res) => {
 
 //to update an object in mongo DB database
 router.put('/:id', (req,res) => {
-   // res.json(students);
    studentsModel.findById(req.params.id, (err,student) => {
        if(err){
            res.status(500).send(err);
@@ -62,11 +61,19 @@ router.put('/:id', (req,res) => {
    })
 })
 
-router.delete('/', (req,res) => {
-    res.json(students);
+//to remove an object from mongoDB database
+router.delete('/:id', (req,res) => {
+    studentsModel.findByIdAndRemove(req.params.id, (err,data) => {
+        if(err){
+            res.status(500).send(err)
+        }
+        if(data){
+            res.status(500).send(`student with id ${req.params.id} has been deleted`);
+        }
+    })
 })
 
-//to get a specific object from database by adding a parameter in request
+//to get a specific object from mongoDB database by adding a parameter in request
 router.get('/:id', (req,res) => {
     studentsModel.findById(req.params.id, (err, data) => {
         if(err){
